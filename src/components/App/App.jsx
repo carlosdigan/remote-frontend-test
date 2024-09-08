@@ -1,16 +1,19 @@
 import React from 'react';
-import './App.scss';
+import { useProperties } from '../../hooks';
 import Header from '../Header';
-import SortAndFilter from '../SortAndFilter';
 import PropertyListing from '../PropertyListing';
+import SortAndFilter from '../SortAndFilter';
+import './App.scss';
 
 const App = () => {
+    const { properties, isLoading, hasError } = useProperties();
+
     return (
         <div className="App">
             <Header />
             <main>
                 <SortAndFilter />
-                <PropertyListing />
+                <PropertyListing properties={properties} isLoading={isLoading} hasError={hasError}/>
             </main>
         </div>
     );

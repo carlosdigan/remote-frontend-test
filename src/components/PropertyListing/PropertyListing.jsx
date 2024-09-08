@@ -1,34 +1,30 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PropertyCard from '../PropertyCard';
 import './PropertyListing.scss';
 
-const DUMMY_PROPERTY = {
-    id: 73864112,
-    bedrooms: 3,
-    summary: 'Property 1 Situated moments from the River Thames in Old Chelsea...',
-    displayAddress: '1 CHEYNE WALK, CHELSEA, SW3',
-    propertyType: 'Flat',
-    price: 1950000,
-    branchName: 'M2 Property, London',
-    propertyUrl: '/property-for-sale/property-73864112.html',
-    contactUrl: '/property-for-sale/contactBranch.html?propertyId=73864112',
-    propertyTitle: '3 bedroom flat for sale',
-    mainImage:
-        'https://media.rightmove.co.uk/dir/crop/10:9-16:9/38k/37655/53588679/37655_CAM170036_IMG_01_0000_max_476x317.jpg',
-};
-
-const PropertyListing = () => {
-    return (
-        <ul className="PropertyListing">
-            {Array(5)
-                .fill(DUMMY_PROPERTY)
-                .map((property, index) => (
-                    <li key={index}>
+const PropertyListing = ({ properties, isLoading, hasError }) => {
+    if (isLoading) {
+        return <p>Loading ...</p>;
+    } else if (hasError) {
+        return <p>There was an error fetching properties</p>;
+    } else {
+        return (
+            <ul className="PropertyListing">
+                Properties
+                {properties.map((property) => (
+                    <li key={property.id}>
                         <PropertyCard {...property} />
                     </li>
                 ))}
-        </ul>
-    );
+            </ul>
+        );
+    }
 };
 
+PropertyListing.propTypes = {
+    properties: PropTypes.array,
+    isLoading: PropTypes.bool,
+    hasError: PropTypes.bool,
+};
 export default PropertyListing;
